@@ -128,3 +128,31 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Node modules
+node_modules/
+# React Native build artifacts
+android/.gradle/
+android/app/build/
+android/app/src/main/res/mipmap-*/ic_launcher.xml
+android/app/src/main/res/mipmap-*/ic_launcher_round.xml
+ios/build/
+ios/Pods/
+ios/Podfile.lock
+ios/*.xcworkspace
+ios/*.xcuserdatad/
+# Configurações de IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+# Arquivos gerados por comandos do React Native
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+# Arquivos temporários
+tmp/
+temp/
+# Outros arquivos que podem ser ignorados
+.env
