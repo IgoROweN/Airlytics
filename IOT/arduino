@@ -1,0 +1,38 @@
+#include <DHT.h>
+
+#define DHTPIN 5       // Pino onde o sensor DHT está conectado
+#define DHTTYPE DHT22  // Modelo do sensor DHT: DHT11 ou DHT22
+
+const int mqSensorPin = 4;  // Pino analógico para o sensor MQ
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+  Serial.begin(9600);
+  dht.begin();
+}
+
+void loop() {
+  float humidity = dht.readHumidity();
+  float temperature = dht.readTemperature();
+
+  if (isnan(humidity) || isnan(temperature)) {
+    Serial.println("Failed to read from DHT sensor!");
+    return;
+  }
+
+  int sensorValue = analogRead(mqSensorPin);
+  float voltage = sensorValue * (5.0 / 1023.0);
+
+  // Envia os valores como JSON via Serial
+  Serial.print("{\"humidity\": ");
+  Serial.print(humidity);
+  Serial.print(", \"temperature\": ");
+  Serial.print(temperature);
+  Serial.print(", \"mq_sensor_value\": ");
+  Serial.print(sensorValue);
+  Serial.print(", \"mq_voltage\": ");
+  Serial.print(voltage);
+  Serial.println("}");
+
+  delay(7000);
+}
