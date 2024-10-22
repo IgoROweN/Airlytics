@@ -156,3 +156,6 @@ tmp/
 temp/
 # Outros arquivos que podem ser ignorados
 .env
+
+
+teste
