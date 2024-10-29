@@ -1,0 +1,186 @@
+openapi: 3.0.3
+info:
+  title: Sensor Data API
+  description: API para gerenciar dados coletados por sensores de umidade, temperatura e outros.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:5000/api/sensors
+    description: Servidor local para desenvolvimento
+
+paths:
+  /:
+    get:
+      summary: Recupera todos os dados de sensores
+      tags:
+        - Sensor Data
+      responses:
+        '200':
+          description: Lista de dados de sensores recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SensorData'
+        '500':
+          description: Erro ao recuperar os dados dos sensores
+
+    post:
+      summary: Cria um novo registro de dados do sensor
+      tags:
+        - Sensor Data
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SensorData'
+      responses:
+        '201':
+          description: Dados do sensor criados com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SensorData'
+        '400':
+          description: Erro de validação dos dados fornecidos
+        '500':
+          description: Erro ao criar os dados do sensor
+
+  /{id}:
+    get:
+      summary: Recupera dados de sensor por ID
+      tags:
+        - Sensor Data
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Dados do sensor recuperados com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SensorData'
+        '404':
+          description: Dados do sensor não encontrados
+        '500':
+          description: Erro ao recuperar os dados do sensor
+
+    put:
+      summary: Atualiza completamente dados do sensor por ID
+      tags:
+        - Sensor Data
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SensorData'
+      responses:
+        '200':
+          description: Dados do sensor atualizados com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SensorData'
+        '400':
+          description: Erro de validação dos dados fornecidos
+        '404':
+          description: Dados do sensor não encontrados
+        '500':
+          description: Erro ao atualizar os dados do sensor
+
+    patch:
+      summary: Atualiza parcialmente dados do sensor por ID
+      tags:
+        - Sensor Data
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SensorData'
+      responses:
+        '200':
+          description: Dados do sensor atualizados parcialmente com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SensorData'
+        '400':
+          description: Erro de validação dos dados fornecidos
+        '404':
+          description: Dados do sensor não encontrados
+        '500':
+          description: Erro ao atualizar os dados do sensor
+
+    delete:
+      summary: Exclui dados de sensor por ID
+      tags:
+        - Sensor Data
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Dados do sensor excluídos com sucesso
+        '404':
+          description: Dados do sensor não encontrados
+        '500':
+          description: Erro ao excluir os dados do sensor
+
+components:
+  schemas:
+    SensorData:
+      type: object
+      required:
+        - humidity
+        - temperature
+        - mq_sensor_value
+        - mq_voltage
+        - timestamp
+      properties:
+        id:
+          type: string
+          description: ID único do registro
+        humidity:
+          type: number
+          description: Umidade em porcentagem (0-100)
+          example: 45.3
+        temperature:
+          type: number
+          description: Temperatura em graus Celsius
+          example: 22.5
+        mq_sensor_value:
+          type: number
+          description: Valor de leitura do sensor MQ
+          example: 350
+        mq_voltage:
+          type: number
+          description: Voltagem do sensor MQ
+          example: 3.3
+        timestamp:
+          type: string
+          format: date-time
+          description: Data e hora da leitura do sensor
+          example: "2024-10-28T14:30:00Z"

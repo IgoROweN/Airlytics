@@ -1,8 +1,0 @@
-backend/
-├── controllers/   # Controladores que manipulam as requisições
-├── models/        # Definições dos esquemas de dados e comunicação com o banco de dados
-├── routes/        # Definição das rotas da API
-├── views/         # Se houver views server-side (caso de API RESTful, pode não ser necessário)
-├── config/        # Arquivos de configuração (ex: conexão com o banco de dados)
-├── app.js         # Arquivo principal que configura o servidor e middleware
-└── package.json   # Configurações do projeto e dependências

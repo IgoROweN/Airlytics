@@ -1,13 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const connectDB = require('./config/db');
 
 // Configura as variáveis de ambiente
 dotenv.config();
-
-// Conecta ao banco de dados
-connectDB(); // Conexão ao banco de dados, se necessário
 
 // Inicializa o app Express
 const app = express();
@@ -16,7 +12,7 @@ const app = express();
 app.use(express.json());
 
 // Conectando ao MongoDB
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB conectado com sucesso!'))
   .catch((error) => console.error('Erro ao conectar no MongoDB:', error));
 
